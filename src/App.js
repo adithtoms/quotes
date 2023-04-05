@@ -12,7 +12,7 @@ function App() {
       <Header />
 <Routes>
   <Route path='/' element={<Quotes></Quotes>}></Route>
-  <Route path='/bookmarks' element={<Bookmarks/>}></Route>
+  <Route path='bookmarks' element={<Bookmarks/>}></Route>
 </Routes>
 
     </div>
