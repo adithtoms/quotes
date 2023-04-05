@@ -9,10 +9,10 @@ function Quotes() {
   //state to hold data from api
   const [quotes, setQuotes] = useState([]);
   const [tags, setTags] = useState([])
-  const [selectedTags, setSelectedTags] = useState([]);
-  const [bookmarks, setBookmarks] = useState([])
-  const [bookmarked, setBookmarked] =useState(false)
 
+  //state to hold data for tags
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [bookmarkedQuotes, setBookmarkedQuotes] = useState([]);
 
   useEffect(() => {
     fetchData()
@@ -49,7 +49,7 @@ function Quotes() {
       setTags(data))
   }
 
-  console.log(tags);
+  // console.log(tags);
 
   const handleQuote = () => {
     fetchData()
@@ -60,8 +60,10 @@ function Quotes() {
   };
 
   const handleBookmark = () => {
-    setBookmarked(!bookmarked)
-  }
+    const newBookmarkedQuotes = [...bookmarkedQuotes, quotes];
+    setBookmarkedQuotes(newBookmarkedQuotes);
+    localStorage.setItem('bookmarkedQuotes', JSON.stringify(newBookmarkedQuotes));
+  };
 
 
   return (
@@ -72,11 +74,12 @@ function Quotes() {
           <p>{quotes.content}</p>
           <h6>~{quotes.author}</h6>
           <p>Tags:-{quotes.tags}</p>
-          <button onClick={handleBookmark} ><span  style={{ backgroundColor: bookmarked ? "red" : "transparent" }} >&#9750;</span ></button>
+          <Button variant="light" onClick={handleBookmark}>
+            Bookmark
+          </Button>
         </Card.Body>
       </Card>
       <Button className='mt-3' variant="warning" onClick={handleQuote}>Next Quote</Button>
-
       <Dropdown className='mt-5'>
         <Dropdown.Toggle variant="success" id="dropdown-basic">
           Select Tags
@@ -88,7 +91,6 @@ function Quotes() {
           ))}
         </Dropdown.Menu>
       </Dropdown>
-
 
     </>
   )
